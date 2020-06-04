@@ -26,4 +26,11 @@
     * Dentro da pasta 'database' criar o arquivo 'connection.ts'
     * Na raiz do projeto criar o arquivo 'knexfile.ts'
     * Para rodar as migrations:
-        -> yarn knex migrate:latest --knexfile knexfile.ts migrate:latest
+        -> yarn knex --knexfile knexfile.ts migrate:latest
+    * para comandos de seed usar:
+        -> yarn knex --knexfile knexfile.ts seed:run
+    * Para esses comandos acima foi criado o alias dos comandos em package.json
+
+ - Instalando a parte de segurança
+    -> yarn add cors
+    -> yarn add @types/cors -D
