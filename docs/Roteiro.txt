@@ -1,0 +1,29 @@
+- Iniciar o projeto criando a pasta do projeto.
+ - executar o comando para inicar o "package.json" nessa pasta:
+    -> yarn init -y  (Inicia o package sem perguntar)
+    -> code .  (abre o VSCode na pasta do projeto)
+
+ - Adicionar o express que seria o manipulador principal do servidor
+    -> yarn add express
+
+ - Adicionar o typescript como dev
+    -> yarn add typescript -D
+    -> yarn tsc --init  (criar o arquivo tsconfig.json)
+    * Neste json do TS definir o "rootDir": "./src", e o "outDir": "./dist"  (criar a pasta src no projeto, a dist será criada pelo manipulador do TS)
+
+ - Instala o pacote que faz a conversão do TS pro JS e prepara o server para se manter rodando, faz o papel do Nodemon
+    -> yarn add ts-node-dev -D
+    * É necessário alterar o package.json definindo os scripts
+
+ - Ao clicar no Debug se atentar ao criar o arquivo de debug, é necessário alterar o scripts em package.json colocando o "--inspect" e configurar o launch.json de forma "attach" e protocol "inspect" com restart true (verificar arquivo)
+
+ - Instalando Knex para acessos ao banco, e vamos usar sqlite
+    -> yarn add knex
+    -> yarn add sqlite3
+
+ - Para o Knex é necessário algumas configs:
+    * Criar a pasta 'database', dentro dela a pasta 'migrations'.
+    * Dentro da pasta 'database' criar o arquivo 'connection.ts'
+    * Na raiz do projeto criar o arquivo 'knexfile.ts'
+    * Para rodar as migrations:
+        -> yarn knex migrate:latest --knexfile knexfile.ts migrate:latest
