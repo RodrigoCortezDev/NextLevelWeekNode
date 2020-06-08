@@ -34,3 +34,7 @@
  - Instalando a parte de segurança
     -> yarn add cors
     -> yarn add @types/cors -D
+
+ - Instalando o pacote para questões de uploads de imagens
+    -> yarn add multer
+    -> yarn add @types/multer;

@@ -17,7 +17,15 @@ class PointController {
 			.distinct()
 			.select('points.*');
 
-		return res.json(points);
+		//Acrescentanto um campo ao retorno para deixar a URL no jeito
+		const serializePoints = points.map(point => {
+			return {
+				...point,
+				image_url: `http://192.168.1.4:3333/uploads/${point.image}`,
+			};
+		});
+
+		return res.json(serializePoints);
 	}
 
 	async create(req: Request, res: Response) {
@@ -30,8 +38,7 @@ class PointController {
 
 			//Criando o Point para ser gravado
 			const point = {
-				image:
-					'https://images.unsplash.com/photo-1591159221879-be4e0e5026a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60',
+				image: req.file.filename,
 				name,
 				email,
 				whatsapp,
@@ -45,12 +52,15 @@ class PointController {
 
 			//Fazendo o insert da outra tabela mxm
 			const point_id = insertedIds[0];
-			const pointItems = items.map((item_id: number) => {
-				return {
-					item_id,
-					point_id,
-				};
-			});
+			const pointItems = items
+				.split(',')
+				.map((item: string) => Number(item.trim()))
+				.map((item_id: number) => {
+					return {
+						item_id,
+						point_id,
+					};
+				});
 			//Gravando os items
 			await trx('point_items').insert(pointItems);
 
@@ -75,13 +85,19 @@ class PointController {
 		//Caso não encontre retorne um erro
 		if (!point) return res.status(400).json('Ponto não encontrado!');
 
+		//Acrescentanto um campo ao retorno para deixar a URL no jeito
+		const serializePoint = {
+			...point,
+			image_url: `http://192.168.1.4:3333/uploads/${point.image}`,
+		};
+
 		//Caso encontre complementa com os items
 		const items = await knex('items')
 			.join('point_items', 'items.id', '=', 'point_items.id')
 			.where('point_items.point_id', id);
 
 		//Retorna o Ponto e Items
-		return res.json({ point, items });
+		return res.json({ serializePoint, items });
 	}
 }
 
