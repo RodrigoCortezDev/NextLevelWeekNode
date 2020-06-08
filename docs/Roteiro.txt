@@ -38,3 +38,8 @@
  - Instalando o pacote para questões de uploads de imagens
     -> yarn add multer
     -> yarn add @types/multer;
+
+ - Tratamentos de rotas
+    -> yarn add celebrate
+    -> yarn add @types/hapi__joi -D  (para o intellisense funcionar)
+    * Mudanças na rota e no server.ts
